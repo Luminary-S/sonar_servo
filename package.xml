@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package>
+	<name>sonar_servo</name>
+	<version>0.0.0</version>
+	<description>The sonar_servo package</description>
+	<!--  -->
+	<maintainer email="cuhksgl@link.cuhk.edu.hk">sgl</maintainer>
+	<!--  -->
+	<license>CLOSED</license>
+	<!--  -->
+	<buildtool_depend>catkin</buildtool_depend>
+	<!--  -->
+	<build_depend>roscpp</build_depend>
+	<build_depend>rospy</build_depend>
+	<build_depend>sensor_msgs</build_depend>
+	<build_depend>serial</build_depend>
+	<build_depend>std_msgs</build_depend>
+	<build_depend>dynamic_reconfigure</build_depend>
+	<!--  -->
+	<run_depend>roscpp</run_depend>
+	<run_depend>rospy</run_depend>
+	<run_depend>sensor_msgs</run_depend>
+	<run_depend>serial</run_depend>
+	<run_depend>std_msgs</run_depend>
+	<run_depend>dynamic_reconfigure</run_depend>
+	<!--  -->
+	<export>
+		<!-- Other tools can request additional information be placed here -->
+	</export>
+</package>

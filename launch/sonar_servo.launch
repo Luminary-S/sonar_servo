@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<launch>
+  <node pkg="sonar_servo" type="sonar_servo_node" name="sonar_servo_node" output="screen" >
+    <param name="port_id" value="/dev/ttyUSB0" /> 
+    <param name="baud_rate" value="115200" />
+    <param name="pub_rate" value="50.0" />
+    <param name="adjust_angle" value="0.0" />
+    <!-- <param name="gain" value = "10.0"> -->
+    <param name="sonar_servo_topic_name" value="sonar_servo" />
+  </node>
+</launch>

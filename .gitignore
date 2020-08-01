@@ -1,0 +1,5 @@
+reference/
+others/
+writing/
+test/
+*.pyc
