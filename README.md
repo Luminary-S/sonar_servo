@@ -23,7 +23,7 @@ When the sonar_array comes with error fitting surface, the servo will rotate to 
 1. RMD-s-50(15), co.: GYEMS
 2. vcc: 12v
 3. 485  
-
+file config
 ## parameter:
 1. encoder/angle : $2^{12}=360^o$
 2. positive direction: from up view, clockwise

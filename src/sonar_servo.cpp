@@ -214,13 +214,13 @@ void SonarServo::packDataCmd(float Angle, float Speed, float Power,
       Data[3] = 0x08;
       Data[4] = 0xEA;
       Data[5] = (unsigned char)(angle & 0xff);
-      Data[6] =(unsigned char)((angle >> 8) & 0xff);
-      Data[7] =(unsigned char)((angle >> 16) & 0xff);
-      Data[8] =(unsigned char)((angle >> 24) & 0xff);
-      Data[9] =(unsigned char)((angle >> 32) & 0xff);
-      Data[10] =(unsigned char)((angle >> 40) & 0xff);
-      Data[11] =(unsigned char)((angle >> 48) & 0xff);
-      Data[12] =(unsigned char)((angle >> 56) & 0xff);
+      Data[6] = (unsigned char)((angle >> 8) & 0xff);
+      Data[7] = (unsigned char)((angle >> 16) & 0xff);
+      Data[8] = (unsigned char)((angle >> 24) & 0xff);
+      Data[9] = (unsigned char)((angle >> 32) & 0xff);
+      Data[10] = (unsigned char)((angle >> 40) & 0xff);
+      Data[11] = (unsigned char)((angle >> 48) & 0xff);
+      Data[12] = (unsigned char)((angle >> 56) & 0xff);
       for (size_t i = 0; i < cmd_len; i++) {
         Dat.push_back(Data[i]);
       }
@@ -401,7 +401,8 @@ float SonarServo::speed_controller(float target, float position,
   float speed;
   float speed_des = get_angle_interval(target, position) / interval;
   // int kp = 10;
-  speed = speed_des - gain_/100.0 * get_angle_interval(target, position) + 0.02 / interval;
+  speed = speed_des - gain_ / 100.0 * get_angle_interval(target, position) +
+          0.02 / interval;
   // packDataCmd(target, (int)(speed*100), 0, direction, 1);
   return speed;
 }
@@ -431,17 +432,17 @@ void SonarServo::sendCmd(float target, float speed, int StopBit) {
   return;
 }
 
-void SonarServo::go_to_init_pos(){
+void SonarServo::go_to_init_pos() {
   int direction = 0;
   float angle = getEncoderData();
   float inter = get_angle_interval(0.0, angle);
-  if (inter > 0.0){
+  if (inter > 0.0) {
     direction = 0;
-  } else{
+  } else {
     direction = 1;
   }
-  std::cout<<"direction: " << direction << std::endl;
-  packDataCmd(0.0,0.0,0.0,direction,4);
+  std::cout << "direction: " << direction << std::endl;
+  packDataCmd(0.0, 0.0, 0.0, direction, 4);
 }
 
 SonarServo::SonarServo(ros::NodeHandle &nh, ros::NodeHandle &nh_private) {
@@ -572,17 +573,15 @@ void SonarServo::imuCallback(const sensor_msgs::ImuConstPtr &msg) {
   // std::endl;
 }
 
-void SonarServo::dynParamCallback(sonar_servo::dynParamConfig &config)
-{
-	ROS_INFO("Reconfigure Request: %f, %f",
-		// config.int_param,
-		config.speed_gain,
-		config.angle_threshold
-		// config.bool_param?"True":"False",
-		// config.size
-    );
-    gain_ = config.speed_gain;
-    angle_threshold_ = config.angle_threshold;
+void SonarServo::dynParamCallback(sonar_servo::dynParamConfig &config) {
+  ROS_INFO("Reconfigure Request: %f, %f",
+           // config.int_param,
+           config.speed_gain, config.angle_threshold
+           // config.bool_param?"True":"False",
+           // config.size
+  );
+  gain_ = config.speed_gain;
+  angle_threshold_ = config.angle_threshold;
 }
 
 void SonarServo::define_pub_sub_server(ros::NodeHandle &nh) {
@@ -591,12 +590,12 @@ void SonarServo::define_pub_sub_server(ros::NodeHandle &nh) {
   // boost bind sonar_sub_ = nh.subscribe<sensor_msgs::LaserEcho>("sonar", 10,
   // boost::bind(&SonarServo::sonarDataCallback, this, _1));
   sonar_sub_ = nh.subscribe<sensor_msgs::LaserEcho>(
-      "sonar", 100, &SonarServo::sonarDataCallback, this);
+      "sonar_servo", 100, &SonarServo::sonarDataCallback, this);
   imu_sub_ = nh.subscribe<sensor_msgs::Imu>("imu_data", 10,
                                             &SonarServo::imuCallback, this);
   servo_pub_ = nh.advertise<sensor_msgs::LaserEcho>(motor_name_, 10);
   f_ = boost::bind(&SonarServo::dynParamCallback, this, _1);
-	server_.setCallback(f_);
+  server_.setCallback(f_);
 }
 
 void SonarServo::initParam(ros::NodeHandle &nh_private) {
